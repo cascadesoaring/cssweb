@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top"/>
+    <style>
+      
+      body {
+        color: #444;
+        font-family: "Verdana","Helvetica","Arial",sans-serif;
+        font-size: 13.3333px;
+      }
+      
+      a {
+        color: #000;
+      }
+      
+      a:hover {
+        background-color:#e0e0e0;
+        border-bottom:1px dotted #bb242d;
+        text-decoration:none;
+      }
+      
+      .button {
+        border-width: thin;
+        border-color: transparent;
+        color: black;
+        padding: 3px 3px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        margin: 1px 1px;
+        cursor: pointer;
+      }
+      
+      .button_cold {background-color: #D6DBDF;} /* Cold */
+      .button_warm {background-color: #FAD7A0;} /* Warm */
+      .button_hot {background-color: #F5B7B1;} /* Hot */
+      
+      /* Tooltip container */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+      
+      /* Tooltip text */
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 220px;
+        background-color: #606060;
+        color: #fff;
+        padding: 5px 9px;
+        border-radius: 6px;
+        position: absolute;
+        top: 100px;
+        left: 365px;
+        z-index: 1;
+      }
+      
+      /* Show the tooltip text when you mouse over the tooltip container */
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+      }
+      
+      /* Tooltip link */
+      .tooltiplink {
+        color: #00FFFF;
+      }
+    
+      .tooltiplink:hover {
+        color: #000;
+        background-color:#e0e0e0;
+        border-bottom:1px dotted #bb242d;
+        text-decoration:none;
+      }
+
+    </style>
+    <script>
+      var thermalUpdraftVelocity = [
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.wfpm.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.wfpm.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.wfpm.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.wfpm.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.wfpm.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.wfpm.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.wfpm.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.wfpm.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.wfpm.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.wfpm.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/wfpm.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/wfpm.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/wfpm.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/wfpm.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/wfpm.3z.png"
+      ];
+      var criticalUpdraftHgt = [
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.hwcritft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.hwcritft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.hwcritft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.hwcritft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.hwcritft.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.hwcritft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.hwcritft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.hwcritft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.hwcritft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.hwcritft.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/hwcritft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/hwcritft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/hwcritft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/hwcritft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/hwcritft.3z.png"
+      ];
+      var cloudbaseCUPot = [
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zsfclclft_zsfclcldifft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zsfclclft_zsfclcldifft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zsfclclft_zsfclcldifft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zsfclclft_zsfclcldifft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zsfclclft_zsfclcldifft.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zsfclclft_zsfclcldifft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zsfclclft_zsfclcldifft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zsfclclft_zsfclcldifft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zsfclclft_zsfclcldifft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zsfclclft_zsfclcldifft.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zsfclclft_zsfclcldifft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zsfclclft_zsfclcldifft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zsfclclft_zsfclcldifft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zsfclclft_zsfclcldifft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zsfclclft_zsfclcldifft.3z.png"
+      ];
+      var cloudbaseODPot = [
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zblclft_zblcldifft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zblclft_zblcldifft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zblclft_zblcldifft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zblclft_zblcldifft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.zblclft_zblcldifft.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zblclft_zblcldifft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zblclft_zblcldifft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zblclft_zblcldifft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zblclft_zblcldifft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.zblclft_zblcldifft.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zblclft_zblcldifft.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zblclft_zblcldifft.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zblclft_zblcldifft.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zblclft_zblcldifft.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/zblclft_zblcldifft.3z.png"
+      ];
+      var blWindspeedDirection = [
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.blwindkt_blwinddeg.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.blwindkt_blwinddeg.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.blwindkt_blwinddeg.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.blwindkt_blwinddeg.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/previous.blwindkt_blwinddeg.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.blwindkt_blwinddeg.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.blwindkt_blwinddeg.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.blwindkt_blwinddeg.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.blwindkt_blwinddeg.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/first.blwindkt_blwinddeg.3z.png",
+
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/blwindkt_blwinddeg.15z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/blwindkt_blwinddeg.18z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/blwindkt_blwinddeg.21z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/blwindkt_blwinddeg.0z.png",
+        "http://www.drjack.info/BLIP/RAP/NW/FCST/blwindkt_blwinddeg.3z.png"
+      ];
+      
+      var current = 0;
+      
+      function onClick(i) {
+        document.getElementById('thermalUpdraftVelocityImg').src = thermalUpdraftVelocity[i];
+        document.getElementById('thermalUpdraftVelocityBtn' + current).style.borderColor = "transparent";
+        document.getElementById('thermalUpdraftVelocityBtn' + i).style.borderColor = "black";
+
+        document.getElementById('criticalUpdraftHgtImg').src = criticalUpdraftHgt[i];
+        document.getElementById('criticalUpdraftHgtBtn' + current).style.borderColor = "transparent";
+        document.getElementById('criticalUpdraftHgtBtn' + i).style.borderColor = "black";
+
+        document.getElementById('cloudbaseCUPotImg').src = cloudbaseCUPot[i];
+        document.getElementById('cloudbaseCUPotBtn' + current).style.borderColor = "transparent";
+        document.getElementById('cloudbaseCUPotBtn' + i).style.borderColor = "black";
+
+        document.getElementById('cloudbaseODPotImg').src = cloudbaseODPot[i];
+        document.getElementById('cloudbaseODPotBtn' + current).style.borderColor = "transparent";
+        document.getElementById('cloudbaseODPotBtn' + i).style.borderColor = "black";
+
+        document.getElementById('blWindspeedDirectionImg').src = blWindspeedDirection[i];
+        document.getElementById('blWindspeedDirectionBtn' + current).style.borderColor = "transparent";
+        document.getElementById('blWindspeedDirectionBtn' + i).style.borderColor = "black";
+
+        current = i;
+      };
+    </script>
+  </head>
+  <body>
+    <a href="http://www.drjack.info/cgi-bin/FORECAST/auth_retrieve.pl" target="_blank">Login to DrJack</a> (username/pwd = <i>cascadesoaring</i>, refresh this page after login)
+    <br>
+    <br>
+    Notes:<br>
+    <ul>
+      <li><b>Prev 15|18|21|00|03z</b> represents foreast for the previous day. This forecast is available without DrJack login.</li>
+      <li><b>First 15|18|21|00|03z</b> represents the first forecast for the current day, it is usually produced around 1am-3am on the morning of the current day and it requires DrJack login (otherwise images show as broken links).</li>
+      <li><b>Latest 15|18|21|00|03z</b> represents the latest updated forecast for the current day, requires DrJack login as well.</li>
+      <li>KEAT location on the maps:<br><img src="http://www.cascadesoaringsociety.com/_/rsrc/1574970478768/flight-operations/cross-country-wx/DrJackKEAT.png"></li>
+    </ul>
+    <br>
+    <br>
+    <div style="height: 650px; overflow: hidden">
+      <img src="http://wxtofly.net/Chelan_windgram.png" width="650px">
+    </div>
+    <br>
+    <br>
+    <button id="thermalUpdraftVelocityBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+    <button id="thermalUpdraftVelocityBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+    <button id="thermalUpdraftVelocityBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+    <button id="thermalUpdraftVelocityBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+    <button id="thermalUpdraftVelocityBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+    <button id="thermalUpdraftVelocityBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+    <button id="thermalUpdraftVelocityBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+    <button id="thermalUpdraftVelocityBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+    <button id="thermalUpdraftVelocityBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+    <button id="thermalUpdraftVelocityBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+    <button id="thermalUpdraftVelocityBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+    <button id="thermalUpdraftVelocityBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+    <button id="thermalUpdraftVelocityBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+    <button id="thermalUpdraftVelocityBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+    <button id="thermalUpdraftVelocityBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+    <br>
+    <div class="tooltip">
+      <span class="tooltiptext">
+        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wstar" class="tooltiplink" target="_blank">DrJack:</a> Upward velocity of air within the thermal. Glider descent rate must be subtracted to give the expected variometer reading.
+      </span>
+      <div style="height: 550px; overflow: hidden">
+        <img id="thermalUpdraftVelocityImg" width="650px">
+      </div>
+    </div>
+    <br>
+    <button id="criticalUpdraftHgtBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+    <button id="criticalUpdraftHgtBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+    <button id="criticalUpdraftHgtBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+    <button id="criticalUpdraftHgtBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+    <button id="criticalUpdraftHgtBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+    <button id="criticalUpdraftHgtBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+    <button id="criticalUpdraftHgtBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+    <button id="criticalUpdraftHgtBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+    <button id="criticalUpdraftHgtBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+    <button id="criticalUpdraftHgtBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+    <button id="criticalUpdraftHgtBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+    <button id="criticalUpdraftHgtBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+    <button id="criticalUpdraftHgtBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+    <button id="criticalUpdraftHgtBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+    <button id="criticalUpdraftHgtBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+    <br>
+    <div class="tooltip">
+      <span class="tooltiptext">
+        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Hcrit" class="tooltiplink" target="_blank">DrJack:</a> Maximum thermalling height over flat terrain under cloudless conditions at which the updraft velocity drops below 225 fpm.
+      </span>
+      <div style="height: 550px; overflow: hidden">
+        <img id="criticalUpdraftHgtImg" width="650px">
+      </div>
+    </div>
+    <br>
+    <button id="cloudbaseCUPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+    <button id="cloudbaseCUPotBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+    <button id="cloudbaseCUPotBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+    <button id="cloudbaseCUPotBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+    <button id="cloudbaseCUPotBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+    <button id="cloudbaseCUPotBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+    <button id="cloudbaseCUPotBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+    <button id="cloudbaseCUPotBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+    <button id="cloudbaseCUPotBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+    <button id="cloudbaseCUPotBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+    <button id="cloudbaseCUPotBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+    <button id="cloudbaseCUPotBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+    <button id="cloudbaseCUPotBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+    <button id="cloudbaseCUPotBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+    <button id="cloudbaseCUPotBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+    <br>
+    <div class="tooltip">
+      <span class="tooltiptext">
+        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Cumulus_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for small, non-extensive cumulus clouds in the BL, if such exist.
+      </span>
+      <div style="height: 575px; overflow: hidden">
+        <img id="cloudbaseCUPotImg" width="650px">
+      </div>
+    </div>
+    <br>
+    <button id="cloudbaseODPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+    <button id="cloudbaseODPotBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+    <button id="cloudbaseODPotBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+    <button id="cloudbaseODPotBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+    <button id="cloudbaseODPotBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+    <button id="cloudbaseODPotBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+    <button id="cloudbaseODPotBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+    <button id="cloudbaseODPotBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+    <button id="cloudbaseODPotBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+    <button id="cloudbaseODPotBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+    <button id="cloudbaseODPotBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+    <button id="cloudbaseODPotBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+    <button id="cloudbaseODPotBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+    <button id="cloudbaseODPotBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+    <button id="cloudbaseODPotBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+    <br>
+    <div class="tooltip">
+      <span class="tooltiptext">
+        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#OvercastDevelopment_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for extensive BL clouds (OvercastDevelopment), if such exist.
+      </span>
+      <div style="height: 575px; overflow: hidden">
+        <img id="cloudbaseODPotImg" width="650px">
+      </div>
+    </div>
+    <br>
+    <button id="blWindspeedDirectionBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+    <button id="blWindspeedDirectionBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+    <button id="blWindspeedDirectionBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+    <button id="blWindspeedDirectionBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+    <button id="blWindspeedDirectionBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+    <button id="blWindspeedDirectionBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+    <button id="blWindspeedDirectionBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+    <button id="blWindspeedDirectionBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+    <button id="blWindspeedDirectionBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+    <button id="blWindspeedDirectionBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+    <button id="blWindspeedDirectionBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+    <button id="blWindspeedDirectionBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+    <button id="blWindspeedDirectionBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+    <button id="blWindspeedDirectionBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+    <button id="blWindspeedDirectionBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+    <br>
+    <div class="tooltip">
+      <span class="tooltiptext">
+        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wind_Speed" class="tooltiplink" target="_blank">DrJack:</a> Speed and direction of the vector-averaged wind in the BL.
+      </span>
+      <div style="height: 575px; overflow: hidden">
+        <img id="blWindspeedDirectionImg" width="650px">
+      </div>
+    </div>
+    <script>
+      onClick(0);
+    </script>
+  </body>
+</html>
