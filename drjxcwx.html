@@ -213,159 +213,160 @@
     <img class="img" src="http://wxtofly.net/Chelan_windgram.png">
     <br>
     <br>
-    <table>
-      <tr>
-        <td style="vertical-align: top">
-          <a href="http://www.drjack.info/cgi-bin/FORECAST/auth_retrieve.pl" target="_blank">Login to DrJack</a><br>
-          <a href="http://www.drjack.info/BLIP/INFO/myforecasting.html" target="_blank">DrJack's Forecast Method</a><br>
-          <a href="http://www.drjack.info/BLIP/INFO/ARTICLE/blipmap_soaring_article.html" target="_blank">BLIPMAP help</a>          
-        </td>
-        <td/>
-        <td>
-          <b>KEAT location</b> on the maps:<br><img class="img" src="https://raw.githubusercontent.com/cascadesoaring/cssweb/master/DrJackKEAT.png">
-        </td>
-      </tr>
-    </table>
-    <br>
-    <br>
-    <div style="padding: 0 65px">
-    <div style="padding: 0 65px">
-      <button id="thermalUpdraftVelocityBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
-      <button id="thermalUpdraftVelocityBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
-      <button id="thermalUpdraftVelocityBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
-      <button id="thermalUpdraftVelocityBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
-      <button id="thermalUpdraftVelocityBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
-      <button id="thermalUpdraftVelocityBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
-      <button id="thermalUpdraftVelocityBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
-      <button id="thermalUpdraftVelocityBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
-      <button id="thermalUpdraftVelocityBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
-      <button id="thermalUpdraftVelocityBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
-      <button id="thermalUpdraftVelocityBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
-      <button id="thermalUpdraftVelocityBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
-      <button id="thermalUpdraftVelocityBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
-      <button id="thermalUpdraftVelocityBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
-      <button id="thermalUpdraftVelocityBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
-    </div>
-    <br>
-    <div class="tooltip">
-      <span class="tooltiptext">
-        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wstar" class="tooltiplink" target="_blank">DrJack:</a> Upward velocity of air within the thermal. Glider descent rate must be subtracted to give the expected variometer reading.
-      </span>
-      <div class="img" style="height: 630px; overflow: hidden">
-        <img id="thermalUpdraftVelocityImg">
+    <div style="padding: 0 33px">
+      <table>
+        <tr>
+          <td>
+            <b>KEAT location</b> on the BLIPMAPs:<br><img class="img" src="https://raw.githubusercontent.com/cascadesoaring/cssweb/master/DrJackKEAT.png">
+          </td>
+          <td></td>
+          <td style="vertical-align: top">
+            <br>
+            <a href="http://www.drjack.info/cgi-bin/FORECAST/auth_retrieve.pl" target="_blank">Login to DrJack</a><br>
+            <a href="http://www.drjack.info/BLIP/INFO/myforecasting.html" target="_blank">DrJack's Forecast Method</a><br>
+            <a href="http://www.drjack.info/BLIP/INFO/ARTICLE/blipmap_soaring_article.html" target="_blank">BLIPMAP help</a>          
+          </td>
+        </tr>
+      </table>
+      <br>
+      <br>
+      <div style="padding: 0 65px">
+        <button id="thermalUpdraftVelocityBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+        <button id="thermalUpdraftVelocityBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+        <button id="thermalUpdraftVelocityBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+        <button id="thermalUpdraftVelocityBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+        <button id="thermalUpdraftVelocityBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+        <button id="thermalUpdraftVelocityBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+        <button id="thermalUpdraftVelocityBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+        <button id="thermalUpdraftVelocityBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+        <button id="thermalUpdraftVelocityBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+        <button id="thermalUpdraftVelocityBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+        <button id="thermalUpdraftVelocityBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+        <button id="thermalUpdraftVelocityBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+        <button id="thermalUpdraftVelocityBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+        <button id="thermalUpdraftVelocityBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+        <button id="thermalUpdraftVelocityBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
       </div>
-    </div>
-    <br>
-    <br>
-    <div style="padding: 0 65px">
-      <button id="criticalUpdraftHgtBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
-      <button id="criticalUpdraftHgtBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
-      <button id="criticalUpdraftHgtBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
-      <button id="criticalUpdraftHgtBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
-      <button id="criticalUpdraftHgtBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
-      <button id="criticalUpdraftHgtBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
-      <button id="criticalUpdraftHgtBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
-      <button id="criticalUpdraftHgtBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
-      <button id="criticalUpdraftHgtBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
-      <button id="criticalUpdraftHgtBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
-      <button id="criticalUpdraftHgtBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
-      <button id="criticalUpdraftHgtBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
-      <button id="criticalUpdraftHgtBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
-      <button id="criticalUpdraftHgtBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
-      <button id="criticalUpdraftHgtBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
-    </div>
-    <br>
-    <div class="tooltip">
-      <span class="tooltiptext">
-        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Hcrit" class="tooltiplink" target="_blank">DrJack:</a> Maximum thermalling height over flat terrain under cloudless conditions at which the updraft velocity drops below 225 fpm.
-      </span>
-      <div class="img" style="height: 630px; overflow: hidden">
-        <img id="criticalUpdraftHgtImg">
+      <br>
+      <div class="tooltip">
+        <span class="tooltiptext">
+          <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wstar" class="tooltiplink" target="_blank">DrJack:</a> Upward velocity of air within the thermal. Glider descent rate must be subtracted to give the expected variometer reading.
+        </span>
+        <div class="img" style="height: 630px; overflow: hidden">
+          <img id="thermalUpdraftVelocityImg">
+        </div>
       </div>
-    </div>
-    <br>
-    <br>
-    <div style="padding: 0 65px">
-      <button id="cloudbaseCUPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
-      <button id="cloudbaseCUPotBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
-      <button id="cloudbaseCUPotBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
-      <button id="cloudbaseCUPotBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
-      <button id="cloudbaseCUPotBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
-      <button id="cloudbaseCUPotBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
-      <button id="cloudbaseCUPotBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
-      <button id="cloudbaseCUPotBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
-      <button id="cloudbaseCUPotBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
-      <button id="cloudbaseCUPotBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
-      <button id="cloudbaseCUPotBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
-      <button id="cloudbaseCUPotBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
-      <button id="cloudbaseCUPotBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
-      <button id="cloudbaseCUPotBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
-      <button id="cloudbaseCUPotBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
-    </div>
-    <br>
-    <div class="tooltip">
-      <span class="tooltiptext">
-        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Cumulus_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for small, non-extensive cumulus clouds in the BL, if such exist.
-      </span>
-      <div class="img" style="height: 655px; overflow: hidden">
-        <img id="cloudbaseCUPotImg">
+      <br>
+      <br>
+      <div style="padding: 0 65px">
+        <button id="criticalUpdraftHgtBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+        <button id="criticalUpdraftHgtBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+        <button id="criticalUpdraftHgtBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+        <button id="criticalUpdraftHgtBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+        <button id="criticalUpdraftHgtBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+        <button id="criticalUpdraftHgtBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+        <button id="criticalUpdraftHgtBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+        <button id="criticalUpdraftHgtBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+        <button id="criticalUpdraftHgtBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+        <button id="criticalUpdraftHgtBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+        <button id="criticalUpdraftHgtBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+        <button id="criticalUpdraftHgtBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+        <button id="criticalUpdraftHgtBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+        <button id="criticalUpdraftHgtBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+        <button id="criticalUpdraftHgtBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
       </div>
-    </div>
-    <br>
-    <br>
-    <div style="padding: 0 65px">
-      <button id="cloudbaseODPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
-      <button id="cloudbaseODPotBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
-      <button id="cloudbaseODPotBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
-      <button id="cloudbaseODPotBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
-      <button id="cloudbaseODPotBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
-      <button id="cloudbaseODPotBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
-      <button id="cloudbaseODPotBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
-      <button id="cloudbaseODPotBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
-      <button id="cloudbaseODPotBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
-      <button id="cloudbaseODPotBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
-      <button id="cloudbaseODPotBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
-      <button id="cloudbaseODPotBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
-      <button id="cloudbaseODPotBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
-      <button id="cloudbaseODPotBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
-      <button id="cloudbaseODPotBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
-    </div>
-    <br>
-    <div class="tooltip">
-      <span class="tooltiptext">
-        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#OvercastDevelopment_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for extensive BL clouds (OvercastDevelopment), if such exist.
-      </span>
-      <div class="img" style="height: 655px; overflow: hidden">
-        <img id="cloudbaseODPotImg">
+      <br>
+      <div class="tooltip">
+        <span class="tooltiptext">
+          <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Hcrit" class="tooltiplink" target="_blank">DrJack:</a> Maximum thermalling height over flat terrain under cloudless conditions at which the updraft velocity drops below 225 fpm.
+        </span>
+        <div class="img" style="height: 630px; overflow: hidden">
+          <img id="criticalUpdraftHgtImg">
+        </div>
       </div>
-    </div>
-    <br>
-    <br>
-    <div style="padding: 0 65px">
-      <button id="blWindspeedDirectionBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
-      <button id="blWindspeedDirectionBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
-      <button id="blWindspeedDirectionBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
-      <button id="blWindspeedDirectionBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
-      <button id="blWindspeedDirectionBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
-      <button id="blWindspeedDirectionBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
-      <button id="blWindspeedDirectionBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
-      <button id="blWindspeedDirectionBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
-      <button id="blWindspeedDirectionBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
-      <button id="blWindspeedDirectionBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
-      <button id="blWindspeedDirectionBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
-      <button id="blWindspeedDirectionBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
-      <button id="blWindspeedDirectionBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
-      <button id="blWindspeedDirectionBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
-      <button id="blWindspeedDirectionBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
-    </div>
-    </div>
-    <br>
-    <div class="tooltip">
-      <span class="tooltiptext">
-        <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wind_Speed" class="tooltiplink" target="_blank">DrJack:</a> Speed and direction of the vector-averaged wind in the BL.
-      </span>
-      <div class="img" style="height: 655px; overflow: hidden">
-        <img id="blWindspeedDirectionImg">
+      <br>
+      <br>
+      <div style="padding: 0 65px">
+        <button id="cloudbaseCUPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+        <button id="cloudbaseCUPotBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+        <button id="cloudbaseCUPotBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+        <button id="cloudbaseCUPotBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+        <button id="cloudbaseCUPotBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+        <button id="cloudbaseCUPotBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+        <button id="cloudbaseCUPotBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+        <button id="cloudbaseCUPotBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+        <button id="cloudbaseCUPotBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+        <button id="cloudbaseCUPotBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+        <button id="cloudbaseCUPotBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+        <button id="cloudbaseCUPotBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+        <button id="cloudbaseCUPotBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+        <button id="cloudbaseCUPotBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+        <button id="cloudbaseCUPotBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+      </div>
+      <br>
+      <div class="tooltip">
+        <span class="tooltiptext">
+          <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Cumulus_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for small, non-extensive cumulus clouds in the BL, if such exist.
+        </span>
+        <div class="img" style="height: 655px; overflow: hidden">
+          <img id="cloudbaseCUPotImg">
+        </div>
+      </div>
+      <br>
+      <br>
+      <div style="padding: 0 65px">
+        <button id="cloudbaseODPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+        <button id="cloudbaseODPotBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+        <button id="cloudbaseODPotBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+        <button id="cloudbaseODPotBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+        <button id="cloudbaseODPotBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+        <button id="cloudbaseODPotBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+        <button id="cloudbaseODPotBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+        <button id="cloudbaseODPotBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+        <button id="cloudbaseODPotBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+        <button id="cloudbaseODPotBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+        <button id="cloudbaseODPotBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+        <button id="cloudbaseODPotBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+        <button id="cloudbaseODPotBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+        <button id="cloudbaseODPotBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+        <button id="cloudbaseODPotBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+      </div>
+      <br>
+      <div class="tooltip">
+        <span class="tooltiptext">
+          <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#OvercastDevelopment_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for extensive BL clouds (OvercastDevelopment), if such exist.
+        </span>
+        <div class="img" style="height: 655px; overflow: hidden">
+          <img id="cloudbaseODPotImg">
+        </div>
+      </div>
+      <br>
+      <br>
+      <div style="padding: 0 65px">
+        <button id="blWindspeedDirectionBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
+        <button id="blWindspeedDirectionBtn1" class="button button_cold" onclick="onClick(1)">18z</button>
+        <button id="blWindspeedDirectionBtn2" class="button button_cold" onclick="onClick(2)">21z</button>
+        <button id="blWindspeedDirectionBtn3" class="button button_cold" onclick="onClick(3)">00z</button>
+        <button id="blWindspeedDirectionBtn4" class="button button_cold" onclick="onClick(4)">03z</button>
+        <button id="blWindspeedDirectionBtn5" class="button button_warm" onclick="onClick(5)">First 15z</button>
+        <button id="blWindspeedDirectionBtn6" class="button button_warm" onclick="onClick(6)">18z</button>
+        <button id="blWindspeedDirectionBtn7" class="button button_warm" onclick="onClick(7)">21z</button>
+        <button id="blWindspeedDirectionBtn8" class="button button_warm" onclick="onClick(8)">00z</button>
+        <button id="blWindspeedDirectionBtn9" class="button button_warm" onclick="onClick(9)">03z</button>
+        <button id="blWindspeedDirectionBtn10" class="button button_hot" onclick="onClick(10)">Latest 15z</button>
+        <button id="blWindspeedDirectionBtn11" class="button button_hot" onclick="onClick(11)">18z</button>
+        <button id="blWindspeedDirectionBtn12" class="button button_hot" onclick="onClick(12)">21z</button>
+        <button id="blWindspeedDirectionBtn13" class="button button_hot" onclick="onClick(13)">00z</button>
+        <button id="blWindspeedDirectionBtn14" class="button button_hot" onclick="onClick(14)">03z</button>
+      </div>
+      <br>
+      <div class="tooltip">
+        <span class="tooltiptext">
+          <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wind_Speed" class="tooltiplink" target="_blank">DrJack:</a> Speed and direction of the vector-averaged wind in the BL.
+        </span>
+        <div class="img" style="height: 655px; overflow: hidden">
+          <img id="blWindspeedDirectionImg">
+        </div>
       </div>
     </div>
     <script>
