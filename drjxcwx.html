@@ -7,8 +7,9 @@
         color: #444;
         font-family: "Verdana","Helvetica","Arial",sans-serif;
         font-size: 13.3333px;
-  max-width: 790px;
-  margin: auto;
+        max-width: 800px;
+        margin: auto;
+        background-image: linear-gradient(90deg, lightgray, white, lightgrey);
       }
       
       a {
@@ -19,6 +20,12 @@
         background-color:#e0e0e0;
         border-bottom:1px dotted #bb242d;
         text-decoration:none;
+      }
+
+      .img {
+        border-style:solid;
+        border-width: thin;
+        border-color: darkgray;
       }
       
       .button {
@@ -202,17 +209,15 @@
   </head>
   <body>
     <br>
-    <img src="http://wxtofly.net/Chelan_windgram.png">
+    <img class="img" src="http://wxtofly.net/Chelan_windgram.png">
     <br>
     <br>
-    Notes:<br>
-    <ul>
-      <li><b>Prev 15|18|21|00|03z</b> represents foreast for the previous day. This forecast is available without DrJack login.</li><br>
-      <li><b>First 15|18|21|00|03z</b> represents the first forecast for the current day, it is usually produced around 1am-3am on the morning of the current day and it requires DrJack login (otherwise images show as broken links).</li><br>
-      <li><b>Latest 15|18|21|00|03z</b> represents the latest updated forecast for the current day, requires DrJack login as well.</li><br>
-      <li><b>If [First] and [Latest] images don't show up,</b> <a href="http://www.drjack.info/cgi-bin/FORECAST/auth_retrieve.pl" target="_blank">login on DrJack</a>, refresh this page after login.</li><br>
-      <li><b>KEAT location</b> on the maps:<br><img src="https://raw.githubusercontent.com/cascadesoaring/cssweb/master/DrJackKEAT.png"></li>
-    </ul>
+    <table>
+      <tr>
+        <td><b>KEAT location</b> on the maps:</td>
+        <td><img class="img" src="https://raw.githubusercontent.com/cascadesoaring/cssweb/master/DrJackKEAT.png"></td>
+      </tr>
+    </table>
     <br>
     <br>
     <div style="padding: 0 65px">
@@ -237,10 +242,11 @@
       <span class="tooltiptext">
         <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wstar" class="tooltiplink" target="_blank">DrJack:</a> Upward velocity of air within the thermal. Glider descent rate must be subtracted to give the expected variometer reading.
       </span>
-      <div style="height: 630px; overflow: hidden">
+      <div class="img" style="height: 630px; overflow: hidden">
         <img id="thermalUpdraftVelocityImg">
       </div>
     </div>
+    <br>
     <br>
     <div style="padding: 0 65px">
       <button id="criticalUpdraftHgtBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
@@ -264,10 +270,11 @@
       <span class="tooltiptext">
         <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Hcrit" class="tooltiplink" target="_blank">DrJack:</a> Maximum thermalling height over flat terrain under cloudless conditions at which the updraft velocity drops below 225 fpm.
       </span>
-      <div style="height: 630px; overflow: hidden">
+      <div class="img" style="height: 630px; overflow: hidden">
         <img id="criticalUpdraftHgtImg">
       </div>
     </div>
+    <br>
     <br>
     <div style="padding: 0 65px">
       <button id="cloudbaseCUPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
@@ -291,10 +298,11 @@
       <span class="tooltiptext">
         <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Cumulus_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for small, non-extensive cumulus clouds in the BL, if such exist.
       </span>
-      <div style="height: 655px; overflow: hidden">
+      <div class="img" style="height: 655px; overflow: hidden">
         <img id="cloudbaseCUPotImg">
       </div>
     </div>
+    <br>
     <br>
     <div style="padding: 0 65px">
       <button id="cloudbaseODPotBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
@@ -318,10 +326,11 @@
       <span class="tooltiptext">
         <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#OvercastDevelopment_Potential" class="tooltiplink" target="_blank">DrJack:</a> Cloudbase for extensive BL clouds (OvercastDevelopment), if such exist.
       </span>
-      <div style="height: 655px; overflow: hidden">
+      <div class="img" style="height: 655px; overflow: hidden">
         <img id="cloudbaseODPotImg">
       </div>
     </div>
+    <br>
     <br>
     <div style="padding: 0 65px">
       <button id="blWindspeedDirectionBtn0" class="button button_cold" onclick="onClick(0)">Prev 15z</button>
@@ -345,7 +354,7 @@
       <span class="tooltiptext">
         <a href="http://www.drjack.info/BLIP/INFO/parameter_details.html#Wind_Speed" class="tooltiplink" target="_blank">DrJack:</a> Speed and direction of the vector-averaged wind in the BL.
       </span>
-      <div style="height: 655px; overflow: hidden">
+      <div class="img" style="height: 655px; overflow: hidden">
         <img id="blWindspeedDirectionImg">
       </div>
     </div>
