@@ -19,9 +19,9 @@ namespace CssWeb.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req, 
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function Fetch received a request.");
-
             string target = req.Query["target"];
+
+            log.LogInformation($"Fetch({target})");
 
             using (HttpResponseMessage response = await HttpClient.GetAsync(target))
             {
@@ -32,7 +32,7 @@ namespace CssWeb.Functions
                 }
                 else
                 {
-                    return new BadRequestObjectResult($"Target error: {response.StatusCode}");
+                    return new BadRequestObjectResult($"Fetch({target}): target error {response.StatusCode}");
                 }
             }
         }
