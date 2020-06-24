@@ -1,5 +1,5 @@
 using System;
-using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,27 +12,40 @@ namespace CssWeb.Functions
 {
     public static class Fetch
     {
-        private static readonly HttpClient HttpClient = new HttpClient();
-
-        [FunctionName("Fetch")]
+         [FunctionName("Fetch")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req, 
             ILogger log)
         {
             string target = req.Query["target"];
+            string cookieData = req.Query["cookieData"];
 
-            log.LogInformation($"Fetch({target})");
+            log.LogInformation($"Fetch({target}), cookie={cookieData}");
 
-            using (HttpResponseMessage response = await HttpClient.GetAsync(target))
+            var httpClientHandler = new HttpClientHandler();
+            using (var httpClient = new HttpClient(httpClientHandler))
             {
-                if (response.IsSuccessStatusCode)
+                if (!String.IsNullOrWhiteSpace(cookieData))
                 {
-                    byte[] responseContent = await response.Content.ReadAsByteArrayAsync();
-                    return new FileContentResult(responseContent, response.Content.Headers.ContentType.MediaType);
+                    string[] cookieParts = cookieData.Split("|");
+                    httpClientHandler.CookieContainer.Add(new Cookie(
+                        name: cookieParts[0],
+                        value: cookieParts[1],
+                        path: cookieParts[2],
+                        domain: cookieParts[3]));
                 }
-                else
+
+                using (HttpResponseMessage response = await httpClient.GetAsync(target))
                 {
-                    return new BadRequestObjectResult($"Fetch({target}): target error {response.StatusCode}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        byte[] responseContent = await response.Content.ReadAsByteArrayAsync();
+                        return new FileContentResult(responseContent, response.Content.Headers.ContentType.MediaType);
+                    }
+                    else
+                    {
+                        return new BadRequestObjectResult($"Fetch({target}), cookie={cookieData}: target error {response.StatusCode}");
+                    }
                 }
             }
         }
