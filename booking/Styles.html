@@ -123,18 +123,17 @@ body {
   height: 100vh;           /* cover screen to block interactions */
   pointer-events: none;    /* allow clicks when inactive */
   z-index: 1000;
-  justify-content: center; /* center horizontally */
-  align-items: center;     /* center vertically */
   padding: 1rem;
 }
 .status-overlay.active {
-  display: flex;
+  display: block;
   pointer-events: all;     /* block page interactions */
   background: rgba(0,0,0,0.4);  /* dim the page */
 }
 
 /* Status message styling */
 .status-message {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,6 +147,8 @@ body {
   box-shadow: var(--shadow);
   padding: 1rem 1.5rem;
   text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .status-message.info  { color: blue; }
 .status-message.error { color: #b00; }

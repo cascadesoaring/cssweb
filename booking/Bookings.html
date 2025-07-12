@@ -8,7 +8,7 @@
     <div id="status-overlay" class="status-overlay">
       <div id="status" class="status-message">
         <span id="status-text"></span>
-        <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info')">✖</button>
+        <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info', event)">✖</button>
       </div>
     </div>
 
@@ -43,7 +43,7 @@
         <input id="input_pilotName" placeholder="pilot">
       </label>
 
-      <button onclick="book()">Book</button>
+      <button onclick="book(event)">Book</button>
     </div>
 
     <h3>Active and upcoming bookings:</h3>
@@ -57,21 +57,50 @@
        * @param {string} msg   The text to show (empty to clear)
        * @param {'info'|'error'} [type='info']
        */
-      function setStatus(msg = '', type = 'info') {
+      function setStatus(msg = '', type = 'info', origin) {
         const overlay = document.getElementById('status-overlay');
         const container = document.getElementById('status');
         const span = document.getElementById('status-text');
         if (!overlay || !container || !span) return;
 
+        if (origin) {
+          statusButton = origin.target || origin.currentTarget || origin;
+        }
+
         // reset
         overlay.classList.remove('active');
         container.classList.remove('info', 'error');
         span.textContent = '';
+        container.style.top = '';
+        container.style.left = '';
+        container.style.transform = '';
 
         if (msg) {
           overlay.classList.add('active');
           container.classList.add(type);
           span.textContent = msg;
+
+          const anchor = statusButton;
+          if (anchor && typeof anchor.getBoundingClientRect === 'function') {
+            const rect = anchor.getBoundingClientRect();
+            let top = rect.bottom + 8;
+            const maxBottom = window.innerHeight - container.offsetHeight - 8;
+            if (top > maxBottom) {
+              top = rect.top - container.offsetHeight - 8;
+            }
+            if (top < 8) {
+              top = 8;
+            }
+            container.style.top = `${top}px`;
+            container.style.left = `${rect.left + rect.width / 2}px`;
+            container.style.transform = 'translateX(-50%)';
+          } else {
+            container.style.top = '50%';
+            container.style.left = '50%';
+            container.style.transform = 'translate(-50%, -50%)';
+          }
+        } else {
+          statusButton = null;
         }
       }
 
@@ -141,7 +170,7 @@
               <button
                 class="delete-btn"
                 title="Delete booking"
-                onclick="deleteBooking('${b.id}')"
+                onclick="deleteBooking('${b.id}', event)"
               >🗑️</button>
             `;
 
@@ -149,7 +178,10 @@
           });
       }
 
-      function book() {
+      let statusButton = null;
+
+      function book(evt) {
+        statusButton = (evt && evt.currentTarget) || (evt && evt.target) || null;
         const tailNumber = document.getElementById('input_tailNumber').value;
         const bookingStart = document.getElementById('input_date').value;
         const bookingLength = document.getElementById('input_lengthHr').value;
@@ -173,7 +205,8 @@
           .createBooking(bookingStart, bookingLength, tailNumber, pilotName, pin);
       }
 
-      function deleteBooking(id) {
+      function deleteBooking(id, evt) {
+        statusButton = (evt && evt.currentTarget) || (evt && evt.target) || null;
         const pin = document.getElementById('input_pin').value;
 
         if (!pin) { setStatus('Enter pin at the top of the page', 'error'); return; }
