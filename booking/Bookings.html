@@ -130,13 +130,13 @@
         return `${dayName} ${month}/${day}/${year} ${hour}:${min}${ampm}`;
       }
 
-      function refresh(bookings, statusMessage) {
+      function refresh(bookings, statusMessage, evt) {
         if (typeof bookings === 'string' && bookings.startsWith('Error')) {
-          setStatus(bookings, 'error');
+          setStatus(bookings, 'error', evt);
           return;
         }
 
-        setStatus(statusMessage);
+        setStatus(statusMessage, 'info', evt);
         
         bookings = JSON.parse(bookings)
         bookings.sort((a, b) => new Date(a.bookingStart) - new Date(b.bookingStart));
@@ -184,10 +184,10 @@
 
         google.script.run
           .withSuccessHandler(createBookingResponse => {
-            refresh(createBookingResponse, 'Booking created');
+            refresh(createBookingResponse, 'Booking created', evt);
           })
           .withFailureHandler(err => {
-            setStatus(`Error: ${err.message||err}`, 'error');
+            setStatus(`Error: ${err.message||err}`, 'error', evt);
           })
           .createBooking(bookingStart, bookingLength, tailNumber, pilotName, pin);
       }
@@ -201,10 +201,10 @@
 
         google.script.run
           .withSuccessHandler(deleteBookingResponse => {
-            refresh(deleteBookingResponse, 'Booking deleted');
+            refresh(deleteBookingResponse, 'Booking deleted', evt);
           })
           .withFailureHandler(err => {
-            setStatus(`Error: ${err.message||err}`, 'error');
+            setStatus(`Error: ${err.message||err}`, 'error', evt);
           })
           .deleteBooking(id, pin);
       }
