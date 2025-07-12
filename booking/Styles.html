@@ -54,12 +54,11 @@
 .inline-form #input_date,
 .inline-form #input_lengthHr,
 .inline-form #input_tailNumber,
-.inline-form #input_pilotName,
-.inline-form #input_pin, {
+.inline-form #input_pilotName {
   order: 0;
 }
 
-/* Second-row controls (pin, book) */
+/* Book button positioning */
 .inline-form button {
   order: 1;
   margin-left: auto;
@@ -70,7 +69,6 @@
 .inline-form #input_lengthHr   { height: 35px; width: 65px;  }
 .inline-form #input_tailNumber { height: 35px; width: 200px; }
 .inline-form #input_pilotName  { height: 35px; width: 96px; }
-.inline-form #input_pin        { height: 35px; width: 50px;  }
 
 /* Book button styling + fixed width */
 .inline-form button {
@@ -117,6 +115,30 @@
 /* only show the “✖” when there’s text */
 .status-message.info .status-clear,
 .status-message.error .status-clear { visibility: visible; }
+
+/* Pin entry section */
+.pin-block {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+  font-family: Roboto, sans-serif;
+  color: var(--clr-text);
+}
+
+.pin-block input {
+  padding: 0.5em;
+  height: 35px;
+  width: 50px;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  background: var(--clr-bg);
+  font-size: 0.9rem;
+}
+
+.pin-block label {
+  font-weight: 500;
+}
 
 
 /* Container: vertical stack of cards, left-aligned */
