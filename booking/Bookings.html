@@ -20,9 +20,10 @@
     <div class="inline-form">
       <h3>Create new booking:</h3>
 
-      <label>
-        <input type="datetime-local" id="input_date">
-      </label>
+       <label class="datetime-wrapper">
+         <input type="datetime-local" id="input_date">
+         <span id="date-placeholder" class="placeholder">mm/dd/yyyy --:-- &#x1F4C5;</span>
+       </label>
 
       <label>
         <span>hr:</span>
@@ -207,6 +208,21 @@
             setStatus(`Error: ${err.message||err}`, 'error', evt);
           })
           .deleteBooking(id, pin);
+      }
+
+      // show placeholder text for the datetime field when empty on Safari only
+      const inputDate = document.getElementById('input_date');
+      const datePlaceholder = document.getElementById('date-placeholder');
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      if (isSafari && inputDate && datePlaceholder) {
+        function toggleDatePlaceholder() {
+          datePlaceholder.style.display = inputDate.value ? 'none' : 'block';
+        }
+        toggleDatePlaceholder();
+        inputDate.addEventListener('input', toggleDatePlaceholder);
+      } else if (datePlaceholder) {
+        // hide on non-Safari browsers
+        datePlaceholder.style.display = 'none';
       }
 
       // initial load

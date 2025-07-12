@@ -90,8 +90,21 @@ body {
 /* Fixed control widths */
 .inline-form #input_date       { height: var(--input-height); width: 190px; background: var(--clr-date-bg); }
 .inline-form #input_lengthHr   { height: var(--input-height); width: 65px;  }
-.inline-form #input_tailNumber { height: var(--input-height); width: 200px; background: var(--clr-resource-bg); }
-.inline-form #input_pilotName  { height: var(--input-height); width: 96px; }
+  .inline-form #input_tailNumber { height: var(--input-height); width: 200px; background: var(--clr-resource-bg); }
+  .inline-form #input_pilotName  { height: var(--input-height); width: 96px; }
+
+  /* custom placeholder for datetime field */
+  .inline-form .datetime-wrapper { position: relative; }
+  .inline-form .datetime-wrapper .placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: var(--input-height);
+    padding: 0 0.5em;
+    /* lighter placeholder text */
+    color: #bbbbbb;
+    pointer-events: none;
+  }
 
 /* Book button styling + fixed width */
 .inline-form button {
