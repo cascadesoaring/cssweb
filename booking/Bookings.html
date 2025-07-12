@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= include('Styles.body.html'); ?>
+    <?!= include('Styles.status.html'); ?>
+    <?!= include('Styles.bookings.html'); ?>
+  </head>
+  <body>
+    <div id="status" class="status-message">
+      <span id="status-text"></span>
+      <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info')">✖</button>
+    </div>
+    <div class="inline-form">
+
+      <label>
+        <input type="datetime-local" id="input_date">
+      </label>
+
+      <label style="display: inline-block; vertical-align: middle;">
+        <input type="number" id="input_lengthHr" min="1" value="1">
+        <span>hr</span>
+      </label>
+
+      <label>
+        <select id="input_tailNumber">
+          <? for(let a of aircrafts) { ?>
+            <option value="<?= a.tailNumber ?>">
+              <?= a.tailNumber ?> <?= a.type ?>
+            </option>
+          <? } ?>
+        </select>
+      </label>
+
+      <label>
+        <input id="input_pilotName" placeholder="pilot">
+      </label>
+
+      <label>
+        <input type="password" id="input_pin" placeholder="pin">
+      </label>
+
+      <button onclick="book()">Book</button>
+    </div>
+
+    <h2>Active and Upcoming Bookings:</h2>
+    <section id="bookings" class="bookings-grid"/>
+
+
+    <script>
+      aircrafts = <?!= JSON.stringify(aircrafts) ?>
+
+      /**
+       * @param {string} msg   The text to show (empty to clear)
+       * @param {'info'|'error'} [type='info']
+       */
+      function setStatus(msg = '', type = 'info') {
+        const container = document.getElementById('status');
+        const span = document.getElementById('status-text');
+        if (!container || !span) return;
+
+        // reset
+        container.classList.remove('info', 'error');
+        span.textContent = '';
+
+        if (msg) {
+          container.classList.add(type);
+          span.textContent = msg;
+        }
+      }
+
+      /**
+       * Returns the ordinal suffix for a day (1st, 2nd, 3rd, 4th, …)
+       */
+      function getOrdinal(n) {
+        const s = ["th","st","nd","rd"];
+        const v = n % 100;
+        return s[(v - 20) % 10] || s[v] || s[0];
+      }
+
+      /**
+       * Format a Date into "Saturday June 6th 2025 10:30am"
+       */
+      function formatDateTime(date) {
+        const days   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+        const dayName   = days[date.getDay()];
+        const monthName = months[date.getMonth()];
+        const day       = date.getDate();
+        const year      = date.getFullYear();
+
+        let hour   = date.getHours();
+        const min  = String(date.getMinutes()).padStart(2,"0");
+        const ampm = hour < 12 ? "am" : "pm";
+
+        hour = hour % 12 || 12; // 0 → 12
+        return `${dayName} ${monthName} ${day}${getOrdinal(day)} ${year} ${hour}:${min}${ampm}`;
+      }
+
+      function refresh(bookings, statusMessage) {
+        if (typeof bookings === 'string' && bookings.startsWith('Error')) {
+          setStatus(bookings, 'error');
+          return;
+        }
+
+        setStatus(statusMessage);
+        
+        bookings = JSON.parse(bookings)
+        bookings.sort((a, b) => new Date(a.bookingStart) - new Date(b.bookingStart));
+
+        const container = document.getElementById('bookings');
+        container.innerHTML = '';
+        
+        bookings
+          .forEach(b => {
+            const aircraft = aircrafts.find(a => a.tailNumber == b.tailNumber);
+            const formattedBookingStart = formatDateTime(new Date(b.bookingStart));
+
+            // build the card
+            const card = document.createElement('article');
+            card.className = 'booking-card';
+            card.innerHTML = `
+              <time datetime="${b.bookingStart}">${formattedBookingStart}</time>
+              <span class="length">${b.bookingLength}hr</span>
+              <span class="resource">${aircraft.tailNumber} ${aircraft.type}</span>
+              <span class="pilot">${b.pilotName}</span>
+              <button
+                class="delete-btn"
+                title="Delete booking"
+                onclick="deleteBooking('${b.id}')"
+              >🗑️</button>
+            `;
+
+            container.appendChild(card);
+          });
+      }
+
+      function book() {
+        const tailNumber = document.getElementById('input_tailNumber').value;
+        const bookingStart = document.getElementById('input_date').value;
+        const bookingLength = document.getElementById('input_lengthHr').value;
+        const pilotName = document.getElementById('input_pilotName').value;
+        const pin = document.getElementById('input_pin').value;
+
+        if (!bookingStart) { setStatus('Specify booking date & time', 'error'); return; }
+        if (!bookingLength) { setStatus('Specify booking length', 'error'); return; }
+        if (!pilotName) { setStatus('Specify pilot name', 'error'); return; }
+        if (!pin) { setStatus('Enter pin', 'error'); return; }
+
+        setStatus('Booking...');
+
+        google.script.run
+          .withSuccessHandler(createBookingResponse => {
+            refresh(createBookingResponse, 'Booking created');
+          })
+          .withFailureHandler(err => {
+            setStatus(`Error: ${err.message||err}`, 'error');
+          })
+          .createBooking(bookingStart, bookingLength, tailNumber, pilotName, pin);
+      }
+
+      function deleteBooking(id) {
+        const pin = document.getElementById('input_pin').value;
+
+        if (!pin) { setStatus('Enter pin', 'error'); return; }
+
+        setStatus('Deleting...', 'info');
+
+        google.script.run
+          .withSuccessHandler(deleteBookingResponse => {
+            refresh(deleteBookingResponse, 'Booking deleted');
+          })
+          .withFailureHandler(err => {
+            setStatus(`Error: ${err.message||err}`, 'error');
+          })
+          .deleteBooking(id, pin);
+      }
+
+      // initial load
+      refresh(<?= JSON.stringify(bookings) ?>, '');
+    </script>
+  </body>
+</html>
