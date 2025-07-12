@@ -5,9 +5,11 @@
     <?!= include('Styles.html'); ?>
   </head>
   <body>
-    <div id="status" class="status-message">
-      <span id="status-text"></span>
-      <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info')">✖</button>
+    <div id="status-overlay" class="status-overlay">
+      <div id="status" class="status-message">
+        <span id="status-text"></span>
+        <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info')">✖</button>
+      </div>
     </div>
 
     <div class="pin-block">
@@ -56,15 +58,18 @@
        * @param {'info'|'error'} [type='info']
        */
       function setStatus(msg = '', type = 'info') {
+        const overlay = document.getElementById('status-overlay');
         const container = document.getElementById('status');
         const span = document.getElementById('status-text');
-        if (!container || !span) return;
+        if (!overlay || !container || !span) return;
 
         // reset
+        overlay.classList.remove('active');
         container.classList.remove('info', 'error');
         span.textContent = '';
 
         if (msg) {
+          overlay.classList.add('active');
           container.classList.add(type);
           span.textContent = msg;
         }

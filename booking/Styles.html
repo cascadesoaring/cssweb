@@ -113,16 +113,38 @@ body {
 
 
 
+/* Status message overlay */
+.status-overlay {
+  display: none;           /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;            /* cover screen to block interactions */
+  pointer-events: none;    /* allow clicks when inactive */
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-start; /* keep card near top */
+}
+.status-overlay.active {
+  display: flex;
+  pointer-events: all;     /* block page interactions */
+}
+
 /* Status message styling */
 .status-message {
-  display: flex;           /* block-level flex container */
+  display: flex;
   align-items: center;
   gap: 0.5em;
-  min-height: 1.5em;       /* reserve height even when empty */
-  margin-bottom: 0.5em;    /* now this actually pushes the next block down */
+  min-height: 1.5em;
+  margin-top: 1rem;
+  background: var(--clr-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 0.75rem 1rem;
 }
-.status-message.info    { color: blue; }
-.status-message.error   { color: #b00; }
+.status-message.info  { color: blue; }
+.status-message.error { color: #b00; }
 .status-clear {
   display: inline-flex;
   align-items: center;
