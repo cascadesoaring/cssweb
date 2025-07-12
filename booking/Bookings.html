@@ -156,10 +156,10 @@
         const pilotName = document.getElementById('input_pilotName').value;
         const pin = document.getElementById('input_pin').value;
 
-        if (!bookingStart) { setStatus('Specify booking date & time', 'error'); return; }
+        if (!bookingStart) { setStatus('Enter date & time of the new booking', 'error'); return; }
         if (!bookingLength) { setStatus('Specify booking length', 'error'); return; }
-        if (!pilotName) { setStatus('Specify pilot name', 'error'); return; }
-        if (!pin) { setStatus('Enter pin', 'error'); return; }
+        if (!pilotName) { setStatus('Enter pilot name for the new booking', 'error'); return; }
+        if (!pin) { setStatus('Enter pin at the top of the page', 'error'); return; }
 
         setStatus('Booking...');
 
@@ -176,7 +176,7 @@
       function deleteBooking(id) {
         const pin = document.getElementById('input_pin').value;
 
-        if (!pin) { setStatus('Enter pin', 'error'); return; }
+        if (!pin) { setStatus('Enter pin at the top of the page', 'error'); return; }
 
         setStatus('Deleting...', 'info');
 
