@@ -20,9 +20,10 @@
     <div class="inline-form">
       <h3>Create new booking:</h3>
 
-      <label>
-        <input type="datetime-local" id="input_date" placeholder="Booking date &amp; time">
-      </label>
+       <label class="datetime-wrapper">
+         <input type="datetime-local" id="input_date">
+         <span id="date-placeholder" class="placeholder">Booking date &amp; time</span>
+       </label>
 
       <label>
         <span>hr:</span>
@@ -208,6 +209,16 @@
           })
           .deleteBooking(id, pin);
       }
+
+      // show placeholder text for the datetime field when empty
+      const inputDate = document.getElementById('input_date');
+      const datePlaceholder = document.getElementById('date-placeholder');
+      function toggleDatePlaceholder() {
+        if (!datePlaceholder) return;
+        datePlaceholder.style.display = inputDate.value ? 'none' : 'block';
+      }
+      toggleDatePlaceholder();
+      inputDate.addEventListener('input', toggleDatePlaceholder);
 
       // initial load
       refresh(<?= JSON.stringify(bookings) ?>, '');
