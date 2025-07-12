@@ -80,7 +80,7 @@
       }
 
       /**
-       * Format a Date into "Wednesday 20/08/2025 10:08am"
+       * Format a Date into "Wednesday 08/20/2025 10:08am"
        */
       function formatDateTime(date) {
         const days = [
@@ -103,7 +103,7 @@
         const ampm = hour < 12 ? "am" : "pm";
 
         hour = hour % 12 || 12; // 0 → 12
-        return `${dayName} ${day}/${month}/${year} ${hour}:${min}${ampm}`;
+        return `${dayName} ${month}/${day}/${year} ${hour}:${min}${ampm}`;
       }
 
       function refresh(bookings, statusMessage) {
