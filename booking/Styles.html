@@ -1,0 +1,214 @@
+<style>
+
+:root {
+  --clr-bg:           #f9f9f9;
+  --clr-card:         #fff;
+  --clr-border:       #ddd;
+  --clr-primary:      #2563eb;
+  --clr-primary-hover:#1e40af;
+  --clr-text:         #111;
+  --radius:           6px;
+  --gap:              0.75rem;
+  --pad:              1rem;
+}
+
+/* Form container: wrapable flex, max 670px */
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 700px;
+  box-sizing: border-box;
+  gap: var(--gap);
+  background: var(--clr-card);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  font-family: Roboto, sans-serif;
+  color: var(--clr-text);
+}
+.inline-form label {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.inline-form label span {
+  margin-bottom: 0.25em;
+  font-weight: 500;
+}
+
+/* Common control styling */
+.inline-form input,
+.inline-form select {
+  padding: 0.5em;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  background: var(--clr-bg);
+  box-sizing: border-box;
+}
+
+/* First-row controls (date, length, tail, pilot) */
+.inline-form #input_date,
+.inline-form #input_lengthHr,
+.inline-form #input_tailNumber,
+.inline-form #input_pilotName,
+.inline-form #input_pin, {
+  order: 0;
+}
+
+/* Second-row controls (pin, book) */
+.inline-form button {
+  order: 1;
+  margin-left: auto;
+}
+
+/* Fixed control widths */
+.inline-form #input_date       { height: 35px; width: 190px; }
+.inline-form #input_lengthHr   { height: 35px; width: 65px;  }
+.inline-form #input_tailNumber { height: 35px; width: 200px; }
+.inline-form #input_pilotName  { height: 35px; width: 96px; }
+.inline-form #input_pin        { height: 35px; width: 50px;  }
+
+/* Book button styling + fixed width */
+.inline-form button {
+  height: 35px;
+  width: 163px;
+  padding: 0.6em 0em;
+  background: var(--clr-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.inline-form button:hover {
+  background: var(--clr-primary-hover);
+}
+
+
+
+/* Status message styling */
+.status-message {
+  display: flex;           /* block-level flex container */
+  align-items: center;
+  gap: 0.5em;
+  min-height: 1.5em;       /* reserve height even when empty */
+  margin-bottom: 0.5em;    /* now this actually pushes the next block down */
+}
+.status-message.info    { color: blue; }
+.status-message.error   { color: #b00; }
+.status-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  font-size: 1em;
+  padding: 0;
+  transform: translateY(-0.2em);
+  visibility: hidden;
+}
+/* only show the “✖” when there’s text */
+.status-message.info .status-clear,
+.status-message.error .status-clear { visibility: visible; }
+
+
+/* Container: vertical stack of cards, left-aligned */
+.bookings-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+/* Card: flex layout so items wrap when space is tight */
+.booking-card {
+  position: relative;       /* for delete button positioning */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+
+  width: 100%;
+  max-width: 700px;
+  box-sizing: border-box;
+
+  /* unified font */
+  font-family: Roboto, sans-serif;
+  font-size: 0.9rem;
+  color: #222;
+
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.booking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Common badge styling */
+.booking-card time,
+.booking-card .length,
+.booking-card .resource,
+.booking-card .pilot {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 4px;
+  padding: 0.25em 0.5em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Fixed widths and hues for each badge */
+.booking-card time      { flex: 0 0 250px; color: #555; background: #e0e7ff; }
+.booking-card .length   { flex: 0 0 50px; }
+.booking-card .resource { flex: 0 0 180px; background: #d1fae5; }
+/* Pilot badge now uses default badge style */
+.booking-card .pilot    { flex: 0 0 100px; }
+
+/* Delete button */
+.booking-card .delete-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0;
+  border: none;
+  background: rgba(0,0,0,0.05);
+  border-radius: 50%;
+  color: #555;
+  font-size: 1em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.booking-card .delete-btn:hover {
+  background: #f8d7da;
+  color: #b21f2d;
+}
+
+.booking-card .delete-btn:focus {
+  outline: 2px solid #b21f2d;
+  outline-offset: 2px;
+}
+
+</style>
