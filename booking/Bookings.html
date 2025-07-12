@@ -57,6 +57,10 @@
        * @param {string} msg   The text to show (empty to clear)
        * @param {'info'|'error'} [type='info']
        */
+      // whichever element triggered the most recent status update
+      // used to position the card near that control
+      let anchorElement = null;
+
       function setStatus(msg = '', type = 'info', origin) {
         const overlay = document.getElementById('status-overlay');
         const container = document.getElementById('status');
@@ -64,7 +68,7 @@
         if (!overlay || !container || !span) return;
 
         if (origin) {
-          statusButton = origin.target || origin.currentTarget || origin;
+          anchorElement = origin.target || origin.currentTarget || origin;
         }
 
         // reset
@@ -80,7 +84,7 @@
           container.classList.add(type);
           span.textContent = msg;
 
-          const anchor = statusButton;
+          const anchor = anchorElement;
           if (anchor && typeof anchor.getBoundingClientRect === 'function') {
             const rect = anchor.getBoundingClientRect();
             let top = rect.bottom + 8;
@@ -100,7 +104,7 @@
             container.style.transform = 'translate(-50%, -50%)';
           }
         } else {
-          statusButton = null;
+          anchorElement = null;
         }
       }
 
@@ -178,22 +182,19 @@
           });
       }
 
-      let statusButton = null;
-
       function book(evt) {
-        statusButton = (evt && evt.currentTarget) || (evt && evt.target) || null;
         const tailNumber = document.getElementById('input_tailNumber').value;
         const bookingStart = document.getElementById('input_date').value;
         const bookingLength = document.getElementById('input_lengthHr').value;
         const pilotName = document.getElementById('input_pilotName').value;
         const pin = document.getElementById('input_pin').value;
 
-        if (!bookingStart) { setStatus('Enter date & time of the new booking', 'error'); return; }
-        if (!bookingLength) { setStatus('Specify booking length', 'error'); return; }
-        if (!pilotName) { setStatus('Enter pilot name for the new booking', 'error'); return; }
-        if (!pin) { setStatus('Enter pin at the top of the page', 'error'); return; }
+        if (!bookingStart) { setStatus('Enter date & time of the new booking', 'error', evt); return; }
+        if (!bookingLength) { setStatus('Specify booking length', 'error', evt); return; }
+        if (!pilotName) { setStatus('Enter pilot name for the new booking', 'error', evt); return; }
+        if (!pin) { setStatus('Enter pin at the top of the page', 'error', evt); return; }
 
-        setStatus('Booking...');
+        setStatus('Booking...', 'info', evt);
 
         google.script.run
           .withSuccessHandler(createBookingResponse => {
@@ -206,12 +207,11 @@
       }
 
       function deleteBooking(id, evt) {
-        statusButton = (evt && evt.currentTarget) || (evt && evt.target) || null;
         const pin = document.getElementById('input_pin').value;
 
-        if (!pin) { setStatus('Enter pin at the top of the page', 'error'); return; }
+        if (!pin) { setStatus('Enter pin at the top of the page', 'error', evt); return; }
 
-        setStatus('Deleting...', 'info');
+        setStatus('Deleting...', 'info', evt);
 
         google.script.run
           .withSuccessHandler(deleteBookingResponse => {
