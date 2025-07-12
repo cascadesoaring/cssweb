@@ -15,7 +15,7 @@
 /* Form container: single-row flex */
 .inline-form {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   width: 100%;
   max-width: 700px;
   box-sizing: border-box;
@@ -30,6 +30,7 @@
 .inline-form label {
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin: 0;
   font-size: 0.9rem;
 }
@@ -120,6 +121,10 @@
 .pin-block {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 700px;
+  box-sizing: border-box;
   gap: var(--gap);
   margin-bottom: var(--gap);
   font-family: Roboto, sans-serif;
