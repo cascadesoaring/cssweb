@@ -1,7 +1,7 @@
 <style>
 
 :root {
-  --clr-bg:           #f9f9f9;
+  --clr-bg:           transparent; /* page background */
   --clr-card:         #fff;
   --clr-form-bg:      #f0f4ff;
   --clr-border:       #ddd;
@@ -180,7 +180,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;              /* match form control spacing */
 
   width: 100%;
   max-width: 700px;
@@ -226,11 +226,10 @@ body {
 
 /* Delete button */
 .booking-card .delete-btn {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  width: 1.5em;
-  height: 1.5em;
+  position: static;                /* participate in flex layout */
+  margin-left: auto;               /* push button to far right */
+  width: var(--input-height);      /* match pill height */
+  height: var(--input-height);
   padding: 0;
   border: none;
   background: rgba(0,0,0,0.05);
