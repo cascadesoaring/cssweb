@@ -226,11 +226,10 @@ body {
 
 /* Delete button */
 .booking-card .delete-btn {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  width: 1.5em;
-  height: 1.5em;
+  position: static;                /* participate in flex layout */
+  margin-left: auto;               /* push button to far right */
+  width: var(--input-height);      /* match pill height */
+  height: var(--input-height);
   padding: 0;
   border: none;
   background: rgba(0,0,0,0.05);
