@@ -5,9 +5,11 @@
     <?!= include('Styles.html'); ?>
   </head>
   <body>
-    <div id="status" class="status-message">
-      <span id="status-text"></span>
-      <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info')">✖</button>
+    <div id="status-overlay" class="status-overlay">
+      <div id="status" class="status-message">
+        <span id="status-text"></span>
+        <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info', event)">✖</button>
+      </div>
     </div>
 
     <div class="pin-block">
@@ -41,7 +43,7 @@
         <input id="input_pilotName" placeholder="pilot">
       </label>
 
-      <button onclick="book()">Book</button>
+      <button onclick="book(event)">Book</button>
     </div>
 
     <h3>Active and upcoming bookings:</h3>
@@ -55,18 +57,40 @@
        * @param {string} msg   The text to show (empty to clear)
        * @param {'info'|'error'} [type='info']
        */
-      function setStatus(msg = '', type = 'info') {
+      function setStatus(msg = '', type = 'info', origin) {
+        const overlay = document.getElementById('status-overlay');
         const container = document.getElementById('status');
         const span = document.getElementById('status-text');
-        if (!container || !span) return;
+        if (!overlay || !container || !span) return;
+
+        const anchorElement = origin
+          ? origin.target || origin.currentTarget || origin
+          : null;
 
         // reset
+        overlay.classList.remove('active');
         container.classList.remove('info', 'error');
         span.textContent = '';
+        container.style.top = '';
+        container.style.left = '';
+        container.style.transform = '';
 
         if (msg) {
+          overlay.classList.add('active');
           container.classList.add(type);
           span.textContent = msg;
+
+          if (anchorElement && typeof anchorElement.getBoundingClientRect === 'function') {
+            const rect = anchorElement.getBoundingClientRect();
+            const gap = 8; // space between card and origin
+            container.style.top = `${rect.top + rect.height / 2}px`;
+            container.style.left = `${rect.left - gap}px`;
+            container.style.transform = 'translate(-100%, -50%)';
+          } else {
+            container.style.top = '50%';
+            container.style.left = '50%';
+            container.style.transform = 'translate(-50%, -50%)';
+          }
         }
       }
 
@@ -106,13 +130,13 @@
         return `${dayName} ${month}/${day}/${year} ${hour}:${min}${ampm}`;
       }
 
-      function refresh(bookings, statusMessage) {
+      function refresh(bookings, statusMessage, evt) {
         if (typeof bookings === 'string' && bookings.startsWith('Error')) {
-          setStatus(bookings, 'error');
+          setStatus(bookings, 'error', evt);
           return;
         }
 
-        setStatus(statusMessage);
+        setStatus(statusMessage, 'info', evt);
         
         bookings = JSON.parse(bookings)
         bookings.sort((a, b) => new Date(a.bookingStart) - new Date(b.bookingStart));
@@ -136,7 +160,7 @@
               <button
                 class="delete-btn"
                 title="Delete booking"
-                onclick="deleteBooking('${b.id}')"
+                onclick="deleteBooking('${b.id}', event)"
               >🗑️</button>
             `;
 
@@ -144,43 +168,43 @@
           });
       }
 
-      function book() {
+      function book(evt) {
         const tailNumber = document.getElementById('input_tailNumber').value;
         const bookingStart = document.getElementById('input_date').value;
         const bookingLength = document.getElementById('input_lengthHr').value;
         const pilotName = document.getElementById('input_pilotName').value;
         const pin = document.getElementById('input_pin').value;
 
-        if (!bookingStart) { setStatus('Specify booking date & time', 'error'); return; }
-        if (!bookingLength) { setStatus('Specify booking length', 'error'); return; }
-        if (!pilotName) { setStatus('Specify pilot name', 'error'); return; }
-        if (!pin) { setStatus('Enter pin', 'error'); return; }
+        if (!bookingStart) { setStatus('Enter date & time of the new booking', 'error', evt); return; }
+        if (!bookingLength) { setStatus('Specify booking length', 'error', evt); return; }
+        if (!pilotName) { setStatus('Enter pilot name for the new booking', 'error', evt); return; }
+        if (!pin) { setStatus('Enter pin at the top of the page', 'error', evt); return; }
 
-        setStatus('Booking...');
+        setStatus('Booking...', 'info', evt);
 
         google.script.run
           .withSuccessHandler(createBookingResponse => {
-            refresh(createBookingResponse, 'Booking created');
+            refresh(createBookingResponse, 'Booking created', evt);
           })
           .withFailureHandler(err => {
-            setStatus(`Error: ${err.message||err}`, 'error');
+            setStatus(`Error: ${err.message||err}`, 'error', evt);
           })
           .createBooking(bookingStart, bookingLength, tailNumber, pilotName, pin);
       }
 
-      function deleteBooking(id) {
+      function deleteBooking(id, evt) {
         const pin = document.getElementById('input_pin').value;
 
-        if (!pin) { setStatus('Enter pin', 'error'); return; }
+        if (!pin) { setStatus('Enter pin at the top of the page', 'error', evt); return; }
 
-        setStatus('Deleting...', 'info');
+        setStatus('Deleting...', 'info', evt);
 
         google.script.run
           .withSuccessHandler(deleteBookingResponse => {
-            refresh(deleteBookingResponse, 'Booking deleted');
+            refresh(deleteBookingResponse, 'Booking deleted', evt);
           })
           .withFailureHandler(err => {
-            setStatus(`Error: ${err.message||err}`, 'error');
+            setStatus(`Error: ${err.message||err}`, 'error', evt);
           })
           .deleteBooking(id, pin);
       }
