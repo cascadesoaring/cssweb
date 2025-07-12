@@ -9,6 +9,12 @@
       <span id="status-text"></span>
       <button id="status-clear" class="status-clear" aria-label="Clear status" onclick="setStatus('', 'info')">✖</button>
     </div>
+
+    <div class="pin-block">
+      <label for="input_pin">PIN (required for any changes to bookings)</label>
+      <input type="password" id="input_pin" placeholder="pin" />
+    </div>
+
     <div class="inline-form">
 
       <label>
@@ -32,10 +38,6 @@
 
       <label>
         <input id="input_pilotName" placeholder="pilot">
-      </label>
-
-      <label>
-        <input type="password" id="input_pin" placeholder="pin">
       </label>
 
       <button onclick="book()">Book</button>
