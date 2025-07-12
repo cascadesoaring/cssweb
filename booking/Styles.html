@@ -3,13 +3,30 @@
 :root {
   --clr-bg:           #f9f9f9;
   --clr-card:         #fff;
+  --clr-form-bg:      #f0f4ff;
   --clr-border:       #ddd;
   --clr-primary:      #2563eb;
   --clr-primary-hover:#1e40af;
   --clr-text:         #111;
+  --clr-card-text:    #222;
+  --clr-badge-bg:     #f0f0f0;
+  --clr-muted-text:   #555;
+  --clr-date-bg:      #e0e7ff;
+  --clr-resource-bg:  #d1fae5;
+  --radius-lg:        8px;
   --radius:           6px;
   --gap:              0.75rem;
   --pad:              1rem;
+  --ff-base:         Roboto, sans-serif;
+  --input-height:    35px;
+  --shadow:          0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-hover:    0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+body {
+  font-family: var(--ff-base);
+  color: var(--clr-text);
+  background: var(--clr-bg);
 }
 
 /* Form container: single-row flex */
@@ -20,12 +37,14 @@
   max-width: 700px;
   box-sizing: border-box;
   gap: 0.5rem;
-  background: var(--clr-card);
+  background: var(--clr-form-bg);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   padding: var(--pad);
-  font-family: Roboto, sans-serif;
-  color: var(--clr-text);
+}
+.inline-form h3 {
+  width: 100%;
+  margin: 0 0 0.5rem 0;
 }
 .inline-form label {
   display: flex;
@@ -66,14 +85,14 @@
 }
 
 /* Fixed control widths */
-.inline-form #input_date       { height: 35px; width: 190px; }
-.inline-form #input_lengthHr   { height: 35px; width: 65px;  }
-.inline-form #input_tailNumber { height: 35px; width: 200px; }
-.inline-form #input_pilotName  { height: 35px; width: 96px; }
+.inline-form #input_date       { height: var(--input-height); width: 190px; background: var(--clr-date-bg); }
+.inline-form #input_lengthHr   { height: var(--input-height); width: 65px;  }
+.inline-form #input_tailNumber { height: var(--input-height); width: 200px; background: var(--clr-resource-bg); }
+.inline-form #input_pilotName  { height: var(--input-height); width: 96px; }
 
 /* Book button styling + fixed width */
 .inline-form button {
-  height: 35px;
+  height: var(--input-height);
   width: 60px;
   padding: 0.6em 0em;
   background: var(--clr-primary);
@@ -127,13 +146,11 @@
   box-sizing: border-box;
   gap: var(--gap);
   margin-bottom: var(--gap);
-  font-family: Roboto, sans-serif;
-  color: var(--clr-text);
 }
 
 .pin-block input {
   padding: 0.5em;
-  height: 35px;
+  height: var(--input-height);
   width: 50px;
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
@@ -169,20 +186,18 @@
   max-width: 700px;
   box-sizing: border-box;
 
-  /* unified font */
-  font-family: Roboto, sans-serif;
   font-size: 0.9rem;
-  color: #222;
+  color: var(--clr-card-text);
 
   padding: 1rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background: var(--clr-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .booking-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Common badge styling */
@@ -194,17 +209,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #f0f0f0;
+  height: var(--input-height);
+  background: var(--clr-badge-bg);
   border-radius: 4px;
-  padding: 0.25em 0.5em;
+  padding: 0 0.5em;
   text-align: center;
   white-space: nowrap;
 }
 
 /* Fixed widths and hues for each badge */
-.booking-card time      { flex: 0 0 250px; color: #555; background: #e0e7ff; }
+.booking-card time      { flex: 0 0 250px; color: var(--clr-muted-text); background: var(--clr-date-bg); }
 .booking-card .length   { flex: 0 0 50px; }
-.booking-card .resource { flex: 0 0 180px; background: #d1fae5; }
+.booking-card .resource { flex: 0 0 180px; background: var(--clr-resource-bg); }
 /* Pilot badge now uses default badge style */
 .booking-card .pilot    { flex: 0 0 100px; }
 
@@ -219,7 +235,7 @@
   border: none;
   background: rgba(0,0,0,0.05);
   border-radius: 50%;
-  color: #555;
+  color: var(--clr-muted-text);
   font-size: 1em;
   line-height: 1;
   display: inline-flex;
