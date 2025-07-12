@@ -18,6 +18,11 @@ namespace CssWeb.Functions
             ILogger log)
         {
             string target = req.Query["target"];
+            if (string.IsNullOrWhiteSpace(target))
+            {
+                return new BadRequestObjectResult("Missing target parameter");
+            }
+
             string cookieData = req.Query["cookieData"];
 
             log.LogInformation($"Fetch({target}), cookie={cookieData}");
@@ -28,6 +33,12 @@ namespace CssWeb.Functions
                 if (!String.IsNullOrWhiteSpace(cookieData))
                 {
                     string[] cookieParts = cookieData.Split("|");
+                    if (cookieParts.Length != 4)
+                    {
+                        return new BadRequestObjectResult(
+                            "Invalid cookieData. Use 'name|value|path|domain' format.");
+                    }
+
                     httpClientHandler.CookieContainer.Add(new Cookie(
                         name: cookieParts[0],
                         value: cookieParts[1],
