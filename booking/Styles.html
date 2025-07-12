@@ -3,6 +3,7 @@
 :root {
   --clr-bg:           #f9f9f9;
   --clr-card:         #fff;
+  --clr-form-bg:      #fafafa;
   --clr-border:       #ddd;
   --clr-primary:      #2563eb;
   --clr-primary-hover:#1e40af;
@@ -36,7 +37,7 @@ body {
   max-width: 700px;
   box-sizing: border-box;
   gap: 0.5rem;
-  background: var(--clr-card);
+  background: var(--clr-form-bg);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   padding: var(--pad);
@@ -204,9 +205,10 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  height: var(--input-height);
   background: var(--clr-badge-bg);
   border-radius: 4px;
-  padding: 0.25em 0.5em;
+  padding: 0 0.5em;
   text-align: center;
   white-space: nowrap;
 }
