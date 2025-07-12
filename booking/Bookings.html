@@ -82,17 +82,10 @@
 
           if (anchorElement && typeof anchorElement.getBoundingClientRect === 'function') {
             const rect = anchorElement.getBoundingClientRect();
-            let top = rect.bottom + 8;
-            const maxBottom = window.innerHeight - container.offsetHeight - 8;
-            if (top > maxBottom) {
-              top = rect.top - container.offsetHeight - 8;
-            }
-            if (top < 8) {
-              top = 8;
-            }
-            container.style.top = `${top}px`;
-            container.style.left = `${rect.left + rect.width / 2}px`;
-            container.style.transform = 'translateX(-50%)';
+            const gap = 8; // space between card and origin
+            container.style.top = `${rect.top + rect.height / 2}px`;
+            container.style.left = `${rect.left - gap}px`;
+            container.style.transform = 'translate(-100%, -50%)';
           } else {
             container.style.top = '50%';
             container.style.left = '50%';
