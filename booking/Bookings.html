@@ -57,57 +57,49 @@
        * @param {string} msg   The text to show (empty to clear)
        * @param {'info'|'error'} [type='info']
        */
-      const setStatus = (() => {
-        // whichever element triggered the most recent status update
-        // used to position the card near that control
-        let anchorElement = null;
+      function setStatus(msg = '', type = 'info', origin) {
+        const overlay = document.getElementById('status-overlay');
+        const container = document.getElementById('status');
+        const span = document.getElementById('status-text');
+        if (!overlay || !container || !span) return;
 
-        return function setStatus(msg = '', type = 'info', origin) {
-          const overlay = document.getElementById('status-overlay');
-          const container = document.getElementById('status');
-          const span = document.getElementById('status-text');
-          if (!overlay || !container || !span) return;
+        const anchorElement = origin
+          ? origin.target || origin.currentTarget || origin
+          : null;
 
-          if (origin) {
-            anchorElement = origin.target || origin.currentTarget || origin;
-          }
+        // reset
+        overlay.classList.remove('active');
+        container.classList.remove('info', 'error');
+        span.textContent = '';
+        container.style.top = '';
+        container.style.left = '';
+        container.style.transform = '';
 
-          // reset
-          overlay.classList.remove('active');
-          container.classList.remove('info', 'error');
-          span.textContent = '';
-          container.style.top = '';
-          container.style.left = '';
-          container.style.transform = '';
+        if (msg) {
+          overlay.classList.add('active');
+          container.classList.add(type);
+          span.textContent = msg;
 
-          if (msg) {
-            overlay.classList.add('active');
-            container.classList.add(type);
-            span.textContent = msg;
-
-            if (anchorElement && typeof anchorElement.getBoundingClientRect === 'function') {
-              const rect = anchorElement.getBoundingClientRect();
-              let top = rect.bottom + 8;
-              const maxBottom = window.innerHeight - container.offsetHeight - 8;
-              if (top > maxBottom) {
-                top = rect.top - container.offsetHeight - 8;
-              }
-              if (top < 8) {
-                top = 8;
-              }
-              container.style.top = `${top}px`;
-              container.style.left = `${rect.left + rect.width / 2}px`;
-              container.style.transform = 'translateX(-50%)';
-            } else {
-              container.style.top = '50%';
-              container.style.left = '50%';
-              container.style.transform = 'translate(-50%, -50%)';
+          if (anchorElement && typeof anchorElement.getBoundingClientRect === 'function') {
+            const rect = anchorElement.getBoundingClientRect();
+            let top = rect.bottom + 8;
+            const maxBottom = window.innerHeight - container.offsetHeight - 8;
+            if (top > maxBottom) {
+              top = rect.top - container.offsetHeight - 8;
             }
+            if (top < 8) {
+              top = 8;
+            }
+            container.style.top = `${top}px`;
+            container.style.left = `${rect.left + rect.width / 2}px`;
+            container.style.transform = 'translateX(-50%)';
           } else {
-            anchorElement = null;
+            container.style.top = '50%';
+            container.style.left = '50%';
+            container.style.transform = 'translate(-50%, -50%)';
           }
-        };
-      })();
+        }
+      }
 
       /**
        * Returns the ordinal suffix for a day (1st, 2nd, 3rd, 4th, …)
