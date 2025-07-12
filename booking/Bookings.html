@@ -210,15 +210,20 @@
           .deleteBooking(id, pin);
       }
 
-      // show placeholder text for the datetime field when empty
+      // show placeholder text for the datetime field when empty on Safari only
       const inputDate = document.getElementById('input_date');
       const datePlaceholder = document.getElementById('date-placeholder');
-      function toggleDatePlaceholder() {
-        if (!datePlaceholder) return;
-        datePlaceholder.style.display = inputDate.value ? 'none' : 'block';
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      if (isSafari && inputDate && datePlaceholder) {
+        function toggleDatePlaceholder() {
+          datePlaceholder.style.display = inputDate.value ? 'none' : 'block';
+        }
+        toggleDatePlaceholder();
+        inputDate.addEventListener('input', toggleDatePlaceholder);
+      } else if (datePlaceholder) {
+        // hide on non-Safari browsers
+        datePlaceholder.style.display = 'none';
       }
-      toggleDatePlaceholder();
-      inputDate.addEventListener('input', toggleDatePlaceholder);
 
       // initial load
       refresh(<?= JSON.stringify(bookings) ?>, '');
