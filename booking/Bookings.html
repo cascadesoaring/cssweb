@@ -230,7 +230,7 @@
         toggleDatePlaceholder();
         inputDate.addEventListener('input', toggleDatePlaceholder);
       } else if (datePlaceholder) {
-        // hide on unsupported browsers
+        // hide on non-Safari, non-CromeAndroid browsers (e.g. Edge that shows built-in placeholder)
         datePlaceholder.style.display = 'none';
       }
 
