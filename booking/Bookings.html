@@ -54,7 +54,8 @@
 
 
     <script>
-      aircrafts = <?!= JSON.stringify(aircrafts) ?>
+      aircrafts = <?!= JSON.stringify(aircrafts) ?>;
+      let statusTimer; // timeout ID for auto-clearing status
 
       /**
        * @param {string} msg   The text to show (empty to clear)
@@ -65,6 +66,8 @@
         const container = document.getElementById('status');
         const span = document.getElementById('status-text');
         if (!overlay || !container || !span) return;
+
+        clearTimeout(statusTimer);
 
         const anchorElement = origin
           ? origin.target || origin.currentTarget || origin
@@ -94,6 +97,8 @@
             container.style.left = '50%';
             container.style.transform = 'translate(-50%, -50%)';
           }
+
+          statusTimer = setTimeout(() => setStatus(''), 3000);
         }
       }
 
