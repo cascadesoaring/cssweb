@@ -4,6 +4,7 @@
   --clr-bg:           transparent; /* page background */
   --clr-card:         #fff;
   --clr-form-bg:      #f0f4ff;
+  --clr-list-bg:      #fafafa;
   --clr-border:       #ddd;
   --clr-primary:      #2563eb;
   --clr-primary-hover:#1e40af;
@@ -223,11 +224,16 @@ body {
   width: 100%;
   max-width: 700px;
   box-sizing: border-box;
-  background: var(--clr-form-bg);
+  background: var(--clr-list-bg);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   padding: var(--pad);
   margin: 0;
+}
+
+.bookings-grid h3 {
+  width: 100%;
+  margin: 0 0 0.5rem 0;
 }
 
 /* Card: flex layout so items wrap when space is tight */
