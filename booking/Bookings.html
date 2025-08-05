@@ -151,7 +151,7 @@
 
         const container = document.getElementById('bookings');
         container.innerHTML = '';
-        
+
         bookings
           .forEach(b => {
             const aircraft = aircrafts.find(a => a.tailNumber == b.tailNumber);
@@ -160,6 +160,9 @@
             // build the card
             const card = document.createElement('article');
             card.className = 'booking-card';
+            if (aircraft.tailNumber && aircraft.tailNumber.toLowerCase().includes('tow')) {
+              card.classList.add('tow');
+            }
             card.innerHTML = `
               <time datetime="${b.bookingStart}">${formattedBookingStart}</time>
               <span class="length">${b.bookingLength}hr</span>
