@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <body>
-    <img id="windgram" src="http://wxtofly.net/windgrams/2025-11-15_Chelan_windgram.png?29386648" alt="Chelan windgram 111">
+    <img id="windgram" alt="Chelan windgram 111">
 
     <script>
       // Get today's date
@@ -16,7 +16,8 @@
       // Build URL like:
       // http://wxtofly.net/windgrams/2025-11-15_Chelan_windgram.png?12345678
       const imgUrl = `http://wxtofly.net/windgrams/${yyyy}-${mm}-${dd}_Chelan_windgram.png?${rand}`;
-
+      const imgUrl = `https://cam.pangbornairport.com/webcam/pawebcam.jpg?${rand}`;
+      
       // Set image src
       //document.getElementById('windgram').src = imgUrl;
     </script>
