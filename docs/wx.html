@@ -3,6 +3,13 @@
   <head>
     <meta charset="utf-8">
     <style>
+      /* Layout: put images side-by-side */
+      .images {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start; /* align tops; we'll sync heights in JS */
+      }
+
       /* Constrain these two images to max 300px by 300px while preserving aspect ratio */
       #windgram,
       #keatcam {
@@ -12,11 +19,18 @@
         height: auto;
         display: block;
       }
+
+      /* Ensure keatcam keeps its aspect ratio when we set its height in JS */
+      #keatcam {
+        width: auto; /* width will adjust when height is set */
+      }
     </style>
   </head>
   <body>
-    <img id="windgram" alt="Chelan windgram">
-    <img id="keatcam" alt="Pangborn Airport webcam">
+    <div class="images">
+      <img id="windgram" alt="Chelan windgram">
+      <img id="keatcam" alt="Pangborn Airport webcam">
+    </div>
 
     <script>
       // Get today's date
@@ -34,8 +48,33 @@
       const keatcamUrl = `https://cam.pangbornairport.com/webcam/pawebcam.jpg?${rand}`;
       
       // Set image src
-      document.getElementById('windgram').src = windgramUrl;
-      document.getElementById('keatcam').src = keatcamUrl;
+      const windgram = document.getElementById('windgram');
+      const keatcam = document.getElementById('keatcam');
+
+      windgram.src = windgramUrl;
+      keatcam.src = keatcamUrl;
+
+      // Make keatcam the same height as windgram once windgram's size is known.
+      function syncHeights() {
+        // Use clientHeight which reflects rendered height (after CSS constraints)
+        const h = windgram.clientHeight;
+        if (h && !isNaN(h)) {
+          keatcam.style.height = h + 'px';
+        }
+      }
+
+      // Sync when windgram finishes loading
+      windgram.addEventListener('load', syncHeights);
+
+      // Also sync when keatcam loads (in case it needs adjustment) and on window resize
+      keatcam.addEventListener('load', syncHeights);
+      window.addEventListener('resize', () => {
+        // small delay to allow layout to stabilize on resize
+        setTimeout(syncHeights, 50);
+      });
+
+      // Attempt an initial sync in case images are cached and load events already fired
+      setTimeout(syncHeights, 100);
     </script>
   </body>
 </html>
