@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <body>
+    <img id="windgram" alt="Chelan windgram">
+    <img id="keatcam" alt="Pangborn Airport webcam">
+
+    <script>
+      // Get today's date
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+
+      // Random number for cache-busting
+      const rand = Math.floor(Math.random() * 1e8);
+
+      const wxtofly_chelan = `http://wxtofly.net/windgrams/${yyyy}-${mm}-${dd}_Chelan_windgram.png?${rand}`;
+      const windgramUrl = `https://images.weserv.nl/?url=${encodeURIComponent(inner)}`;
+
+      const keatcamUrl = `https://cam.pangbornairport.com/webcam/pawebcam.jpg?${rand}`;
+      
+      // Set image src
+      document.getElementById('windgram').src = windgramUrl;
+      document.getElementById('keatcam').src = keatcamUrl;
+    </script>
+  </body>
+</html>
