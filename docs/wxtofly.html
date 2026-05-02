@@ -49,6 +49,7 @@
       const windgramUrl = `https://images.weserv.nl/?url=${encodeURIComponent(wxtoflyChelan)}`;
 
       document.getElementById('windgram').src = windgramUrl;
+      document.getElementById('windgram').alt += " " + windgramUrl;
     </script>
   </body>
 </html>
