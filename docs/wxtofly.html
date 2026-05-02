@@ -46,8 +46,8 @@
       const rand = Math.floor(Math.random() * 1e8);
 
       const imageName = `${yyyy}-${mm}-${dd}_MissionPeak_windgram.png`;
-      const wxtoflyChelan = `http://wxtofly.net/windgrams/${imageName}?${rand}`;
-      const windgramUrl = `https://images.weserv.nl/?url=${encodeURIComponent(wxtoflyChelan)}`;
+      const imageUrl = `http://wxtofly.net/windgrams/${imageName}?${rand}`;
+      const windgramUrl = `https://images.weserv.nl/?url=${encodeURIComponent(imageUrl)}`;
 
       document.getElementById('windgram').src = windgramUrl;
       document.getElementById('windgram').alt += " " + imageName;
