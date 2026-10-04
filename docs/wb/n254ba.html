@@ -124,24 +124,49 @@
 
       .station-tick {
         position: absolute;
-        top: 79px;
-        left: -1px;
+        top: 81.5px;
+        left: -1.5px;
         width: 3px;
-        height: 21px;
-        border-radius: 2px;
+        height: 16px;
         background: currentColor;
       }
 
-      .station-dot {
+      .station-leader {
         position: absolute;
-        top: 82px;
-        left: -6px;
-        width: 13px;
-        height: 13px;
-        border: 3px solid white;
-        border-radius: 50%;
-        background: currentColor;
-        box-shadow: 0 1px 4px rgba(16, 42, 67, 0.25);
+        left: -0.5px;
+        border-left: 1px dotted currentColor;
+      }
+
+      .station-marker.above.level-0 .station-leader {
+        top: 37px;
+        height: 52.5px;
+      }
+
+      .station-marker.above.level-1 .station-leader {
+        top: 76px;
+        height: 13.5px;
+      }
+
+      .station-marker.below.level-0 .station-leader {
+        top: 89.5px;
+        height: 18.5px;
+      }
+
+      .station-marker.below.level-1 .station-leader {
+        top: 89.5px;
+        height: 52.5px;
+      }
+
+      .station-axis::before {
+        left: -4px;
+      }
+
+      .station-marker.datum .station-tick {
+        display: none;
+      }
+
+      .station-marker.datum .station-leader {
+        height: 48.5px;
       }
 
       .station-label {
@@ -198,6 +223,24 @@
 
       .station-marker.limit {
         color: var(--green);
+      }
+
+      .station-marker.min-limit .station-label {
+        transform: translateX(calc(-50% - 16px));
+      }
+
+      .station-marker.max-limit .station-label {
+        transform: translateX(calc(-50% + 16px));
+      }
+
+      .station-marker.min-limit .station-leader {
+        transform: skewX(49.84deg);
+        transform-origin: bottom;
+      }
+
+      .station-marker.max-limit .station-leader {
+        transform: skewX(-49.84deg);
+        transform-origin: bottom;
       }
 
       .station-marker.empty {
@@ -671,12 +714,12 @@
         stations: [
           { label: "Datum", detail: "Nose tip · 0 in", value: 0, side: "above", level: 0, type: "reference", align: "start" },
           { label: "Front seat", detail: "43.7 in", value: 43.7, side: "below", level: 0, type: "seat" },
-          { label: "M1", detail: "85.41 in", value: 85.41, side: "above", level: 0, type: "reference" },
+          { label: "MAC start", detail: "85.41 in", value: 85.41, side: "above", level: 0, type: "reference" },
           { label: "Rear seat", detail: "87.8 in", value: 87.8, side: "below", level: 0, type: "seat" },
-          { label: "Minimum CG", detail: "96.8 in", value: 96.8, side: "above", level: 1, type: "limit" },
-          { label: "Maximum CG", detail: "104.2 in", value: 104.2, side: "below", level: 1, type: "limit" },
-          { label: "Empty CG", detail: "118.61 in", value: 118.60909, side: "above", level: 0, type: "empty" },
-          { label: "M2", detail: "134.74 in", value: 134.74, side: "below", level: 0, type: "reference", align: "end" }
+          { label: "Min CG", detail: "96.8 in", value: 96.8, side: "above", level: 1, type: "limit min-limit" },
+          { label: "Max CG", detail: "104.2 in", value: 104.2, side: "above", level: 1, type: "limit max-limit" },
+          { label: "Empty CG", detail: "118.61 in", value: 118.60909, side: "below", level: 0, type: "empty" },
+          { label: "MAC end", detail: "134.74 in", value: 134.74, side: "above", level: 0, type: "reference", align: "end" }
         ]
       };
 
@@ -729,13 +772,14 @@
             station.side,
             `level-${station.level}`,
             station.type,
+            station.value === 0 ? "datum" : "",
             station.align ? `align-${station.align}` : ""
           ].filter(Boolean).join(" ");
           marker.style.setProperty("--position", `${stationToPercent(station.value)}%`);
           marker.innerHTML = `
             <span class="station-label">${station.label}<small>${station.detail}</small></span>
+            <span class="station-leader" aria-hidden="true"></span>
             <span class="station-tick" aria-hidden="true"></span>
-            <span class="station-dot" aria-hidden="true"></span>
           `;
           elements.stationTrack.appendChild(marker);
         });
