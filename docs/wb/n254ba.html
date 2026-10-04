@@ -17,8 +17,6 @@
         --ink: #243b53;
         --muted: #627d98;
         --line: #9fb3c8;
-        --background: #f3f7fa;
-        --shadow: 0 18px 44px rgba(16, 42, 67, 0.12);
       }
 
       * {
@@ -45,10 +43,6 @@
 
       .calculator-card {
         overflow: hidden;
-        border: 1px solid rgba(132, 161, 187, 0.3);
-        border-radius: 22px;
-        background: #ffffff;
-        box-shadow: var(--shadow);
       }
 
       .tracks-scroll {
@@ -156,9 +150,6 @@
         width: max-content;
         max-width: 130px;
         padding: 5px 7px;
-        border: 1px solid #d4e1e9;
-        border-radius: 8px;
-        background: white;
         color: var(--navy);
         font-size: 0.72rem;
         font-weight: 800;
@@ -434,14 +425,11 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 10px;
         padding: 12px 24px 14px;
-        background: white;
       }
 
       .control-card {
         min-width: 0;
         padding: 10px 19px 12px;
-        border-radius: 16px;
-        background: white;
       }
 
       .control-heading {
@@ -505,8 +493,6 @@
       .stations-panel {
         overflow: hidden;
         margin: 0 14px 14px;
-        border-radius: 16px;
-        background: white;
       }
 
       .stations-summary {
@@ -530,9 +516,8 @@
         font-size: 0.94rem;
       }
 
-      .stations-summary small {
-        display: block;
-        margin-top: 3px;
+      .stations-description {
+        margin: 0 20px;
         color: var(--muted);
         font-size: 0.74rem;
         font-weight: 500;
@@ -547,10 +532,6 @@
         content: "";
         transform: rotate(45deg) translate(-2px, 2px);
         transition: transform 140ms ease;
-      }
-
-      .stations-panel[open] .stations-summary {
-        background: white;
       }
 
       .stations-panel[open] .stations-summary::after {
@@ -662,9 +643,9 @@
           <summary class="stations-summary">
             <span>
               <strong>Stations</strong>
-              <small>Reference positions in inches aft of the nose-tip datum</small>
             </span>
           </summary>
+          <p class="stations-description">Reference positions in inches aft of the nose-tip datum</p>
           <div class="stations-panel-scroll">
             <div class="stations-panel-inner">
               <div id="stationTrack" class="station-track">
