@@ -60,18 +60,15 @@
         min-width: 0;
       }
 
-      .track-heading {
+      .envelope-label {
         display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 0;
-      }
-
-      .track-heading h2 {
+        align-items: center;
+        justify-content: center;
         margin: 0;
-        color: var(--navy);
-        font-size: 0.94rem;
+        color: var(--green);
+        font-size: 0.7rem;
+        font-weight: 800;
+        white-space: nowrap;
       }
 
       .station-track {
@@ -282,26 +279,25 @@
         position: absolute;
         top: 38px;
         left: var(--current-position);
-        width: 3px;
-        height: 23px;
-        border-radius: 2px;
-        background: var(--marker-color);
+        width: 2px;
+        height: 24.5px;
+        background: linear-gradient(to bottom, var(--marker-color) calc(100% - 8px), transparent calc(100% - 8px));
         color: var(--marker-color);
-        transition: left 120ms ease, background-color 120ms ease, color 120ms ease;
+        transform: translateX(-50%);
+        pointer-events: none;
       }
 
       .current-cg-marker::after {
         position: absolute;
         bottom: 0;
         left: 50%;
-        width: 15px;
-        height: 15px;
-        border: 3px solid white;
-        border-radius: 50%;
-        background: currentColor;
-        box-shadow: 0 1px 5px rgba(16, 42, 67, 0.3);
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 8px solid currentColor;
         content: "";
-        transform: translate(-50%, 50%);
+        transform: translateX(-50%);
       }
 
       .current-cg-label {
@@ -383,26 +379,25 @@
         position: absolute;
         top: 38px;
         left: var(--current-weight-position);
-        width: 3px;
-        height: 23px;
-        border-radius: 2px;
-        background: var(--marker-color);
+        width: 2px;
+        height: 24.5px;
+        background: linear-gradient(to bottom, var(--marker-color) calc(100% - 8px), transparent calc(100% - 8px));
         color: var(--marker-color);
-        transition: left 120ms ease, background-color 120ms ease, color 120ms ease;
+        transform: translateX(-50%);
+        pointer-events: none;
       }
 
       .current-weight-marker::after {
         position: absolute;
         bottom: 0;
         left: 50%;
-        width: 15px;
-        height: 15px;
-        border: 3px solid white;
-        border-radius: 50%;
-        background: currentColor;
-        box-shadow: 0 1px 5px rgba(16, 42, 67, 0.3);
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 8px solid currentColor;
         content: "";
-        transform: translate(-50%, 50%);
+        transform: translateX(-50%);
       }
 
       .current-weight-label {
@@ -616,12 +611,9 @@
         <div class="tracks-scroll" aria-label="Center of gravity and total weight scales">
           <div class="tracks-inner">
             <section class="cg-section" aria-labelledby="cg-heading">
-              <div class="track-heading">
-                <h2 id="cg-heading">CG</h2>
-              </div>
               <div id="cgTrack" class="cg-track">
                 <div class="cg-axis" aria-hidden="true"></div>
-                <div class="cg-envelope" aria-label="Approved center of gravity envelope"></div>
+                <h2 id="cg-heading" class="cg-envelope envelope-label" aria-label="CG, approved center of gravity envelope">CG</h2>
                 <span class="cg-limit min">96.8&quot; min</span>
                 <span class="cg-limit max">104.2&quot; max</span>
                 <div id="currentCgMarker" class="current-cg-marker" aria-hidden="true">
@@ -631,12 +623,9 @@
             </section>
 
             <section class="weight-section" aria-labelledby="weight-heading">
-              <div class="track-heading">
-                <h2 id="weight-heading">Total weight</h2>
-              </div>
               <div id="weightTrack" class="weight-track">
                 <div class="weight-axis" aria-hidden="true"></div>
-                <div class="weight-envelope" aria-label="Approved total weight envelope"></div>
+                <h2 id="weight-heading" class="weight-envelope envelope-label" aria-label="Total weight, approved total weight envelope">Total weight</h2>
                 <span class="weight-limit empty">680.12 lb empty</span>
                 <span class="weight-limit max">1,100 lb max</span>
                 <div id="currentWeightMarker" class="current-weight-marker edge-start" aria-hidden="true">
